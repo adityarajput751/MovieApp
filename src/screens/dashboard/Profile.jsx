@@ -1,13 +1,18 @@
 import {View, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 const Profile = () => {
   const navigation = useNavigation();
   const [data, setData] = useState('');
 
-  useEffect(() => {
+  useFocusEffect(
+    useCallback(() => {
+      getSignupData()
+    }, []),
+  );
+
     const getSignupData = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem('userSignupData');
@@ -22,8 +27,6 @@ const Profile = () => {
         console.error('Error retrieving data:', error);
       }
     };
-    getSignupData();
-  }, []);
 
   const handleLogout = async () => {
     try {

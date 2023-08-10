@@ -15,9 +15,6 @@ const BottomNavigation = () => {
         tabBarShowLabel: false,
         tabBarStyle: {backgroundColor: '#000000'},
       }}
-      // tabBarOptions={{
-      //   style: {backgroundColor: '#000000'},
-      // }}
     >
       <Tab.Screen
         name="Home"

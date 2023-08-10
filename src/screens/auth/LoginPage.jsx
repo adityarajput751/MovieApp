@@ -6,8 +6,8 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Formik} from 'formik';
 import {LoginInitialValue, LoginValidationSchema} from './utils';
@@ -18,7 +18,12 @@ const LoginPage = () => {
   const [data, setData] = useState();
   const navigation = useNavigation();
 
-  useEffect(() => {
+  useFocusEffect(
+    useCallback(() => {
+      getSignupData()
+    }, []),
+  );
+
     const getSignupData = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem('userSignupData');
@@ -33,8 +38,6 @@ const LoginPage = () => {
         console.error('Error retrieving data:', error);
       }
     };
-    getSignupData();
-  }, []);
 
   const handleLogin = async value => {
     console.log(value);
